@@ -3,7 +3,7 @@
 # This Streamlit app runs cells top-to-bottom and patches common display functions
 import streamlit as st
 
-st.set_page_config(page_title="Notebook App", layout="wide")
+st.set_page_config(page_title="Hasan - Dashboard Prediksi Transjakarta", layout="wide")
 
 # ---- Display helpers to make notebook-style output appear in Streamlit ----
 import types
