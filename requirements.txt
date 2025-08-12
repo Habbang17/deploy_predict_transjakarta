@@ -1,0 +1,7 @@
+google
+matplotlib
+pandas
+plotly
+pyngrok
+streamlit
+streamlit>=1.34
