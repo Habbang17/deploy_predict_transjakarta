@@ -3,7 +3,7 @@
 # This Streamlit app runs cells top-to-bottom and patches common display functions
 import streamlit as st
 
-st.set_page_config(page_title="Hasan - Dashboard Prediksi Transjakarta", layout="wide")
+st.set_page_config(page_title="Hasan - Dashboard Peramalan Transjakarta", layout="wide")
 
 # ---- Display helpers to make notebook-style output appear in Streamlit ----
 import types
@@ -175,7 +175,7 @@ st.sidebar.markdown(
 # Selectbox tanpa label bawaan
 menu = st.sidebar.selectbox(
     label="",
-    options=["Data", "Prediksi"],
+    options=["Data", "Peramalan"],
     index=0 if st.session_state.get("menu", "Data") == "Data" else 1,
     key="menu",
 )
@@ -196,7 +196,7 @@ if menu == "Data":
     # Header: Judul + selectbox file di kanan atas satu baris
     col_title, col_file = st.columns([3, 1])
     with col_title:
-        st.write("## Dashboard Data Keseluruhan Prediksi")
+        st.write("## Dashboard Data Keseluruhan Peramalan")
     with col_file:
         selected_file = st.selectbox(
             "Pilih file data",
@@ -259,12 +259,12 @@ if menu == "Data":
           col_left, col_right = st.columns([4, 2])
 
           with col_left:
-            st.markdown("#### Grafik Data Prediksi")
+            st.markdown("#### Grafik Data Peramalan")
             fig = px.line(
                 df,
                 x="Tanggal",
                 y="Prediksi",
-                title="Grafik Prediksi",
+                title="Grafik Peramalan",
                 labels={"Tanggal": "Tanggal", "Prediksi": "Nilai Prediksi"},
                 template="plotly_white",
             )
@@ -320,8 +320,8 @@ if menu == "Data":
     else:
         st.info("Silakan pilih file data untuk melihat konten.")
 
-elif menu == "Prediksi":
-    st.title("📈 Dashboard Prediksi")
+elif menu == "Peramalan":
+    st.title("📈 Dashboard Peramalan")
 
 
 
@@ -340,7 +340,7 @@ elif menu == "Prediksi":
         tanggal_min = df["Tanggal"].min()
         tanggal_max = df["Tanggal"].max()
         forecast_type = st.selectbox(
-            "Jenis Prediksi",
+            "Jenis Peramalan",
             options=["Harian", "Mingguan", "Bulanan"],
             index=0,
         )
@@ -349,7 +349,7 @@ elif menu == "Prediksi":
         if forecast_type == "Harian":
             # Pilih tanggal tunggal dengan batasan min dan max
             forecast_date = st.date_input(
-                "Pilih Tanggal yang Diprediksi",
+                "Pilih Tanggal yang Diramalkan",
                 min_value=tanggal_min,
                 max_value=tanggal_max,
                 value=tanggal_min,
@@ -398,7 +398,7 @@ elif menu == "Prediksi":
 
             # Gunakan nama bulan tahun sebagai opsi tampilan
             bulan_pilih_display = st.selectbox(
-                "Pilih Bulan yang Diprediksi",
+                "Pilih Bulan yang Diramalkan",
                 options=list(bulan_mapping.values())
             )
 
@@ -414,7 +414,7 @@ elif menu == "Prediksi":
 
     with row1_col1:
         # --- Ganti blok with row1_col1: dengan kode berikut ---
-        st.subheader("📅 Hasil Prediksi Periode Terpilih")
+        st.subheader("📅 Hasil Peramalan Periode Terpilih")
 
         # pastikan kolom Tanggal bertipe datetime64[ns]
         df["Tanggal"] = pd.to_datetime(df["Tanggal"])
@@ -562,9 +562,9 @@ elif menu == "Prediksi":
 
 
             fig.update_layout(
-                title="Grafik Prediksi Mingguan",
+                title="Grafik Peramalan Mingguan",
                 xaxis_title="Minggu",
-                yaxis_title="Total Prediksi",
+                yaxis_title="Total Peramalan",
                 xaxis_tickangle=-45,
                 xaxis=dict(
                     tickmode='array',
@@ -602,8 +602,8 @@ elif menu == "Prediksi":
                 hovertemplate="%{x} : %{y:,}<extra></extra>",
                 name="Prediksi Bulanan"
             ))
-            fig.update_layout(title="Grafik Prediksi Bulanan (Total per Bulan)",
-                              xaxis_title="Bulan", yaxis_title="Total Prediksi",
+            fig.update_layout(title="Grafik Peramalan Bulanan (Total per Bulan)",
+                              xaxis_title="Bulan", yaxis_title="Total Peramalan",
                               xaxis_tickangle=-45, autosize=True)
             st.plotly_chart(fig, use_container_width=True)
 
